@@ -6,20 +6,10 @@
 export default {
   name: "Green",
   props: {
-    time: Number,
+    startBlink: Object,
   },
   mounted() {
-    let handle = setInterval(() => {
-      if (this.time < 4) {
-        this.getAnimation();
-        clearInterval(handle);
-      }
-    }, 1000);
-  },
-  methods: {
-    getAnimation() {
-      document.querySelector(".green").classList.add("blink");
-    },
+    this.startBlink();
   },
 };
 </script>

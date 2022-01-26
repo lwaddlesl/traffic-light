@@ -1,11 +1,11 @@
 <template >
   <div class="timer">{{ time }}</div>
   <div class="traffic-light">
-    <Red v-if="currentColor === red.name" :time="time" />
+    <Red v-if="currentColor === red.name" :startBlink="startBlink" />
     <div v-if="!(currentColor === red.name)" class="red-no-active"></div>
     <Yellow v-if="currentColor === yellow.name" />
     <div v-if="!(currentColor === yellow.name)" class="yellow-no-active"></div>
-    <Green v-if="currentColor === green.name" :time="time" />
+    <Green v-if="currentColor === green.name" :startBlink="startBlink" />
     <div v-if="!(currentColor === green.name)" class="green-no-active"></div>
   </div>
 </template>
@@ -77,6 +77,18 @@ export default {
       this.time = color.time;
       this.currentColor = color.name;
       this.$router.push({ path: color.path });
+    },
+    startBlink() {
+      let handle = setInterval(() => {
+        if (this.time < 4) {
+          if (this.currentColor === this.red.name) {
+            document.querySelector(".red").classList.add("blink");
+          } else if (this.currentColor === this.green.name) {
+            document.querySelector(".green").classList.add("blink");
+          }
+          clearInterval(handle);
+        }
+      }, 1000);
     },
   },
   components: {
